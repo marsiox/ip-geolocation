@@ -36,3 +36,4 @@ docker-compose run test
 ```
 rspec
 ```
+<img width="646" alt="api" src="https://github.com/marsiox/ip-geolocation/assets/849456/42dc5ebf-d871-446f-b501-4a43499260e6">
