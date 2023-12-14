@@ -1,34 +1,22 @@
-# Temperature API
+# IP geolocation API
 ### This Demo API is based on Rack
+This app is using Redis as a database to cache results from external API (ipstack.com).
+If you request geolocation for ip used previously, data will be fetched from cache.
 
 ## Endpoints
 
-### [GET] http://localhost:9393/temp/c2f?value=28
-Convert celsuis to fahrenheit
+### [POST] http://localhost:9292/geolocations
+Request body [JSON]
 ```
-{
-  fahrenheit: 82.4
-}
+{ "ip": "4.21.21.11" }
 ```
 
-### [GET] http://localhost:9393/temp/f2c?value=98
-Convert fahrenheit to celsius
+## Running locally (Docker)
 ```
-{
-  celsius: 36.67
-}
+docker-compose up redis web --build
 ```
 
-### [GET] http://localhost:9393/pressure/boiling-point?hpa=7500
-Boiling point of water for given pressure in hPa
-```
-{
-  temperature: 332.74,
-  scale: "fahrenheit"
-}
-```
-
-## Install
+## Running locally (no Docker)
 ```
 bundle
 ./server.sh
@@ -39,9 +27,12 @@ bundle
 .env
 ```
 
-## Tests with Minitest
+## Running tests (Docker)
 ```
-ruby -Itest test/controllers/pressure_controller_test.rb
-ruby -Itest test/interactors/pressure_point_test.rb
-ruby -Itest test/interactors/temperature_conterter_test.rb
+docker-compose run test
+```
+
+## Running tests (no Docker)
+```
+rspec
 ```
