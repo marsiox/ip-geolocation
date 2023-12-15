@@ -10,6 +10,11 @@ Request body [JSON]
 ```
 { "ip": "4.21.21.11" }
 ```
+## Authorization
+Bearer token
+```
+Bearer 8STR7A1UL0FQYW18
+```
 
 ## Running locally (Docker)
 ```
