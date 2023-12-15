@@ -11,7 +11,9 @@ RSpec.describe GeolocationsController do
   let(:valid_ip) { '123.123.123.123' }
   let(:valid_body) { { ip: valid_ip }.to_json }
   let(:invalid_body) { { ip: 'invalid.ip.addr' }.to_json }
-  let(:headers) { { 'CONTENT_TYPE' => 'application/json' } }
+  let(:valid_auth_token) { "Bearer #{ENV['APP_AUTH_TOKEN']}" }
+  let(:invalid_auth_token) { "invalid-token" }
+  let(:headers) { { 'CONTENT_TYPE' => 'application/json', 'HTTP_AUTHORIZATION' => valid_auth_token } }
 
   describe 'POST /geolocations' do
     context 'valid request' do
@@ -39,6 +41,13 @@ RSpec.describe GeolocationsController do
       it 'returns status code 400' do
         post '/geolocations', invalid_body, headers
         expect(last_response.status).to eq(400)
+      end
+    end
+
+    context 'unauthorized request' do
+      it 'returns status code 401' do
+        post '/geolocations', valid_body, { 'CONTENT_TYPE' => 'application/json', 'HTTP_AUTHORIZATION' => invalid_auth_token }
+        expect(last_response.status).to eq(401)
       end
     end
   end

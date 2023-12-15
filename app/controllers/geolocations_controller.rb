@@ -9,6 +9,8 @@ class GeolocationsController < BaseController
   end
 
   def resolve(req)
+    return authorize_request(req) unless authorize_request(req) == true
+
     body = JSON.parse(req.body.read)
 
     return render_400 unless valid_request?(req, body)

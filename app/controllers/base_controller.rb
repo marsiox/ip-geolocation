@@ -16,4 +16,20 @@ class BaseController
   def render_400
     [400, { "content-type" => "application/json" }, [{ message: 'Bad request' }.to_json]]
   end
+
+  def render_401
+    [401, { "content-type" => "application/json" }, [{ message: 'Unauthorized' }.to_json]]
+  end
+
+  private
+
+  def authorize_request(req)
+    auth_token = req.get_header('HTTP_AUTHORIZATION')&.split&.last
+
+    unless auth_token && auth_token == ENV['APP_AUTH_TOKEN']
+      return render_401
+    end
+
+    true
+  end
 end
